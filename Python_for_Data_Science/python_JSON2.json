@@ -1,0 +1,8 @@
+{
+  "relatedParty": [
+    {
+      "role": "customer",
+      "id": "{{CustomerID}}"
+    }
+  ]
+}
