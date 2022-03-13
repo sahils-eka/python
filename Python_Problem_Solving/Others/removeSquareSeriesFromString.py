@@ -14,11 +14,12 @@ while i <= len(string):
         break
     elif j != int(string[i+st1:i+st1+len(str(j))]):
         print("Start from ", i+st1)
-        print("NE-- j=", j, "Num= ", int(string[i+st1:i+st1+len(str(j))]))
+        print("Not Equal--> j=", j, "Num= ",
+              int(string[i+st1:i+st1+len(str(j))]))
         li.append(string[i])
         i += 1
     else:
-        print("Equal j=", j, "Num= ", int(string[i+st1:i+st1+len(str(j))]))
+        print("Equal--> j=", j, "Num= ", int(string[i+st1:i+st1+len(str(j))]))
         z = 0
         if len(str(j)) == 1:
             z = 0

@@ -50,17 +50,22 @@ y = 2
 z = 2
 n = 2
 
-i = 0
-j = 0
-k = 0
+li = [[i, j, k] for i in range(x) for j in range(y)
+      for k in range(z) if i+j+k != n]
 
-A = []
+print(li)
 
-for i in range(x+1):
-    for j in range(y+1):
-        for k in range(z+1):
-            if i+j+k != n:
-                B = [i, j, k]
-                A.append(B)
+# i = 0
+# j = 0
+# k = 0
 
-print(A)
+# A = []
+
+# for i in range(x+1):
+#     for j in range(y+1):
+#         for k in range(z+1):
+#             if i+j+k != n:
+#                 B = [i, j, k]
+#                 A.append(B)
+
+# print(A)
