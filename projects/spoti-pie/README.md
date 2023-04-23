@@ -1,17 +1,17 @@
 # SpotiPie References and Usage
 Project Content
-- `main.py`: This file contains all the required api calls to fetch details from Spotify
+- `main.py`: This file contains all the api calls required to fetch the details from Spotify.
 - `.env`: Add your Client ID and Client Secret in this file.
     - Create an app to get the above details: https://developer.spotify.com/dashboard/applications
-- `user_auth_token.py`: This is used to generate token(Implicit Grant Flow)
-- `utility/utility_spotipy.py`: This contains useful utility funtions to perform repetitive tasks and some other important funtions like `playlist_genres()`
+- `user_auth_token.py`: This is used to generate the token(Implicit Grant Flow)
+- `utility/utility_spotipy.py`: This contains useful utility funtions to perform repetitive tasks and some other important actions (ex:`playlist_genres()`)
 
 Spotify Client Credential Flow
 - https://developer.spotify.com/documentation/general/guides/authorization/client-credentials/
 
 Spotify Implicit Grant Flow
 - https://developer.spotify.com/documentation/general/guides/authorization/implicit-grant/
-- This method was used to generate user authorization token. This is necessary if we need to perform User specific actions, like getting User Playlists.
+- This method ise used to generate the user authorization token. This is necessary if we need to perform the User specific actions, like getting User Playlists.
 - `user_auth_token.py` script generates the required token.
 - Checkout `Authorization Scopes`
     - https://developer.spotify.com/documentation/general/guides/authorization/scopes/
