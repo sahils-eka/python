@@ -4,7 +4,7 @@ import json
 from utility.csv_generator import CsvFileGenerator
 from utility.json_file_generator import JsonFileGenerator
 
-user_auth_token = "BQCyHTGm3Xoup23Oq5y66q48xbu3a8xc4W1OIfYHSnWhQQa1v7jRivtNdIOlvIqffYpvl0_l3n4YZa-BWKSoRk3kniOVq7zV5rJVvyE5tanH90dUZY--kP3y-2rcl8cjVLLMOcusZkCTVmVzBCDTwOZqScGY_-lIyA1NQoRFIzBmXWydQO4HBgVe"
+user_auth_token = ""  # Generate this using `user_auth_token.py`
 
 # liked_songs = spotipy.get_users_saved_tracks(token=user_auth_token)
 
