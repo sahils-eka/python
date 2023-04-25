@@ -1,28 +1,13 @@
-import main as spotipy
+import main as spotipie
 from utility.utility_spotipy import UtilitySpotiPy
 import json
 from utility.csv_generator import CsvFileGenerator
 from utility.json_file_generator import JsonFileGenerator
 
-user_auth_token = ""  # Generate this using `user_auth_token.py`
+user_auth_token = "BQAt01PIBZOSmAe1J5ykqLdh7UAxA-On7ZQlb5wkIghwqCk9B8K5jxQJyJ1vs1x2XJzLia9jEtxa8wSv2F8ojqvo7dnPFaDGljR188aRxnwYgTEWyIh92aULVy01I_svlr7n2a8bRNJtzt9njlSwbxvO4YFhdLCqhsSkUuzFfZRmHNF3Bqa7WtSn9L3FfFqn8AbSeg0neSItFtcr&token_type=Bearer&expires_in=3600&state=rmcdwgetnam"
 
-# liked_songs = spotipy.get_users_saved_tracks(token=user_auth_token)
-
-# playlist_id = spotipy.get_user_playlists(user_auth_token=user_auth_token)[0][1]
-
-# playlist_items = spotipy.get_user_playlist_items(user_auth_token=user_auth_token, playlist_id=playlist_id)
-
-# print(playlist_items[0])
-
-liked_items = spotipy.get_users_saved_tracks(token=user_auth_token)
-
-items = UtilitySpotiPy.get_tracks_artists_genres(playlist_items=liked_items)
-print(json.dumps(items))
-
-fileds = ["id", "name", "added_at", "duration_sec", "popularity", "artists", "genres"]
-
-file = CsvFileGenerator(fileds=fileds, items=items)
-
+top_10_tracks = spotipie.get_my_top_tracks(token=user_auth_token, term="long_term")
+items = UtilitySpotiPy.get_tracks_artists_genres(playlist_items=top_10_tracks)
+print(items)
 file2 = JsonFileGenerator(items=items)
 file2.json_generator()
-file.csv_generator()
