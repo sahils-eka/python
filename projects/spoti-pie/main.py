@@ -309,7 +309,7 @@ def get_my_top_tracks(token, term="short_term"):
             top10_tracks.append({"track":i})
         return top10_tracks
     else:
-        logging.error(f"error in {get_my_top_tracks.__name__}: {response.content}")
+        logging.error(f"error in {get_my_top_tracks.__name__}: {response}")
         return response.content
 
 def get_my_top_artists(token, term="short_term"):
