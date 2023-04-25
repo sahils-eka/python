@@ -93,7 +93,7 @@ def get_artist(artist_id):
 
     response = requests.get(url=url, headers=headers)
     if response.status_code >=200 and response.status_code <=299:
-        logging.info(f"Fetched details of: {response.json()['name']} (artist)")
+        logging.info(f"Fetched details of {response.json()['name']} (artist)")
         return response.json()
     else:
         logging.error(f"error in {get_artist.__name__}: {response.content}")
@@ -280,6 +280,7 @@ def get_users_saved_tracks(token):
         else:
             logging.error(f"error in {get_users_saved_tracks.__name__}: {response.content}")
             return None
+
     liked_tracks = []
     url = "https://api.spotify.com/v1/me/tracks"
     headers = get_auth_header(token=token)
@@ -293,3 +294,34 @@ def get_users_saved_tracks(token):
             liked_tracks.append(track)
         logging.info(f'Fetched {len(liked_tracks)} tracks')
     return liked_tracks
+
+def get_my_top_tracks(token, term="short_term"):
+    """
+    
+    """
+    url = f"https://api.spotify.com/v1/me/top/tracks"
+    url_query = f"{url}?time_range={term}&offset=0&limit=10"
+    headers = get_auth_header(token=token)
+    response = requests.get(url=url_query, headers=headers)
+    if response.status_code >=200 and response.status_code <=299:
+        top10_tracks = []
+        for i in response.json()["items"]:
+            top10_tracks.append({"track":i})
+        return top10_tracks
+    else:
+        logging.error(f"error in {get_my_top_tracks.__name__}: {response.content}")
+        return response.content
+
+def get_my_top_artists(token, term="short_term"):
+    """
+    
+    """
+    url = f"https://api.spotify.com/v1/me/top/artists"
+    url_query = f"{url}?time_range={term}&offset=0&limit=10"
+    headers = get_auth_header(token=token)
+    response = requests.get(url=url_query, headers=headers)
+    if response.status_code >=200 and response.status_code <=299:
+        return response.content
+    else:
+        logging.error(f"error in {get_my_top_artists.__name__}: {response.content}")
+        return response.content
