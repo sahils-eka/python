@@ -1,4 +1,5 @@
 import main as spotipy
+import json
 
 class UtilitySpotiPy:
 
@@ -36,7 +37,7 @@ class UtilitySpotiPy:
         tracks_and_artists = []
         for count, i in enumerate(playlist_items):
             track = {}
-            track["track_number"] = count
+            track["track_number"] = count + 1
             track["id"] = i["track"]["id"]
             track["name"] = i["track"]["name"]
             if "added_at" in i:
@@ -120,3 +121,19 @@ class UtilitySpotiPy:
                     genres.append(genre)
         genre_count = dict([(genre, genres.count(genre)) for genre in genres])
         return {"name":playlist_details[0], "id":playlist_details[1], "num_of_songs":playlist_details[2], "genres":genre_count}
+
+    def create_artists_json(file_path):  ## Need to complete this !!
+        with open(file_path, 'r') as json_file:
+            json_content = json.loads(json_file.read())
+        artists_json = []
+        artists = []
+        count = 1
+        for i in json_content:
+            for j in i["artists"]:
+                if j["artist_id"] not in artists:
+                    artists_json.append({"artist_id":j["artist_id"], "artist_name":j["artist"]})
+                    artists.append(j["artist_id"])
+                    count += 1
+        with open("files/SS_artist.json", 'w') as artist_file:
+            artist_file.write(json.dumps(artists_json))
+
