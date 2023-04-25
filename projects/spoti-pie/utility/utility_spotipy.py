@@ -34,14 +34,21 @@ class UtilitySpotiPy:
             :tracks_artists_genres (list): List of Dict - track_id, track_name, added_at, duration_sec, popularity, artists(artist, artist_id), genres
         """
         tracks_and_artists = []
-        for i in playlist_items:
+        for count, i in enumerate(playlist_items):
             track = {}
+            track["track_number"] = count
             track["id"] = i["track"]["id"]
-            track["name"] = i["track"]["name"] 
-            track["added_at"] = i["added_at"]
+            track["name"] = i["track"]["name"]
+            if "added_at" in i:
+                track["added_at"] = i["added_at"]
             track["duration_sec"] = i["track"]["duration_ms"] * 0.001
             track["popularity"] = i["track"]["popularity"]
             track["artists"] = [{"artist":i["name"], "artist_id":i["id"]} for i in i["track"]["artists"]]
+            if len(i["track"]["album"]["images"]) >= 2:
+                track["image"] = i["track"]["album"]["images"][1]["url"]
+            else:
+                track["image"] = ""
+            track["preview_url"] = i["track"]["preview_url"]
             tracks_and_artists.append(track)
         tracks_artists_genres = UtilitySpotiPy.enrichment_genres(tracks_and_artists=tracks_and_artists)
         return tracks_artists_genres
@@ -113,5 +120,3 @@ class UtilitySpotiPy:
                     genres.append(genre)
         genre_count = dict([(genre, genres.count(genre)) for genre in genres])
         return {"name":playlist_details[0], "id":playlist_details[1], "num_of_songs":playlist_details[2], "genres":genre_count}
-
-
