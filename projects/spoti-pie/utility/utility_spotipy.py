@@ -142,7 +142,6 @@ class UtilitySpotiPy:
                     artist["artist_id"] = j["artist_id"]
                     artist["artist_name"]= j["artist"]
                     artist["artist_url"]= artist_detail["external_urls"]["spotify"]
-                    artist["genres"]= artist_detail["genres"]
                     if len(artist_detail["images"])>=2:
                         artist["artist_img"]= artist_detail["images"][1]["url"]
                     else:
