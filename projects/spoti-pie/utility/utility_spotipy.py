@@ -1,4 +1,4 @@
-import main as spotipy
+import main as spotipie
 import json
 
 class UtilitySpotiPy:
@@ -19,7 +19,7 @@ class UtilitySpotiPy:
             for j in i["artists"]:
                 if j["artist_id"] not in all_artist_genre:
                     # Creating this dict(artist_id, genre) to avoid duplicate request calls to the spotify server
-                    all_artist_genre[j["artist_id"]] = spotipy.get_genres(artist_id=j["artist_id"])
+                    all_artist_genre[j["artist_id"]] = spotipie.get_genres(artist_id=j["artist_id"])
                 genres.extend([genre for genre in all_artist_genre[j["artist_id"]] if genre not in genres])
             i["genres"] = genres
         return tracks_and_artists
@@ -103,12 +103,12 @@ class UtilitySpotiPy:
         all_artist_ids = []
         genres = []
         
-        playlist_items = spotipy.get_user_playlist_items(user_auth_token=user_auth_token, playlist_id=playlist_id)
+        playlist_items = spotipie.get_user_playlist_items(user_auth_token=user_auth_token, playlist_id=playlist_id)
         tracks_and_artists = self.get_playlist_tracks_artists(playlist_items=playlist_items)
         tracks_artists = UtilitySpotiPy.get_playlist_tracks_artists(playlist_item=playlist_items)
         track_ids = UtilitySpotiPy.get_unique_trackids(tracks_and_artists=tracks_artists)
         for i in track_ids:
-            track_artistis = spotipy.get_songs_artist(track_id=i)
+            track_artistis = spotipie.get_songs_artist(track_id=i)
             for id in track_artistis:
                 all_artist_ids.append(id)
 
@@ -116,7 +116,7 @@ class UtilitySpotiPy:
         artists_dict = dict([(i,all_artist_ids.count(i)) for i in all_artist_ids])
 
         for i in artists_dict:
-            for genre in spotipy.get_genres(artist_id=i):
+            for genre in spotipie.get_genres(artist_id=i):
                 for count in range(int(artists_dict[i])):
                     genres.append(genre)
         genre_count = dict([(genre, genres.count(genre)) for genre in genres])
@@ -137,10 +137,18 @@ class UtilitySpotiPy:
         for i in json_content:
             for j in i["artists"]:
                 if j["artist_id"] not in artists:
-                    artists_dict.append({
-                        "artist_id":j["artist_id"], 
-                        "artist_name":j["artist"]
-                    })
+                    artist_detail = spotipie.get_artist(j["artist_id"])
+                    artist = {}
+                    artist["artist_id"] = j["artist_id"]
+                    artist["artist_name"]= j["artist"]
+                    artist["artist_url"]= artist_detail["external_urls"]["spotify"]
+                    artist["genres"]= artist_detail["genres"]
+                    if len(artist_detail["images"])>=2:
+                        artist["artist_img"]= artist_detail["images"][1]["url"]
+                    else:
+                        artist["artist_img"]= ""
+                    artist["artist_popularity"]= artist_detail["popularity"]
+                    artists_dict.append(artist)
                     artists.append(j["artist_id"])
         with open(output_file_path, 'w') as artist_file:
             artist_file.write(json.dumps(artists_dict))
