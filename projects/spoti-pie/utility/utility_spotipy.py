@@ -137,7 +137,10 @@ class UtilitySpotiPy:
         for i in json_content:
             for j in i["artists"]:
                 if j["artist_id"] not in artists:
-                    artists_dict.append({"artist_id":j["artist_id"], "artist_name":j["artist"]})
+                    artists_dict.append({
+                        "artist_id":j["artist_id"], 
+                        "artist_name":j["artist"]
+                    })
                     artists.append(j["artist_id"])
         with open(output_file_path, 'w') as artist_file:
             artist_file.write(json.dumps(artists_dict))
