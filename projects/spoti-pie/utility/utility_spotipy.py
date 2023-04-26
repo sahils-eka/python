@@ -122,18 +122,47 @@ class UtilitySpotiPy:
         genre_count = dict([(genre, genres.count(genre)) for genre in genres])
         return {"name":playlist_details[0], "id":playlist_details[1], "num_of_songs":playlist_details[2], "genres":genre_count}
 
-    def create_artists_json(file_path):  ## Need to complete this !!
-        with open(file_path, 'r') as json_file:
+    def create_artists_json(input_file_path, output_file_path):
+        """
+        Utility funtion to create the artist json file using the data obtained from `get_tracks_artists_genres()`
+
+        Parameters:
+            :input_file_path (str): Path to the `get_tracks_artists_genres()` json data
+            :output_file_path (str): Output file name
+        """
+        with open(input_file_path, 'r') as json_file:
             json_content = json.loads(json_file.read())
-        artists_json = []
+        artists_dict = []
         artists = []
-        count = 1
         for i in json_content:
             for j in i["artists"]:
                 if j["artist_id"] not in artists:
-                    artists_json.append({"artist_id":j["artist_id"], "artist_name":j["artist"]})
+                    artists_dict.append({"artist_id":j["artist_id"], "artist_name":j["artist"]})
                     artists.append(j["artist_id"])
-                    count += 1
-        with open("files/SS_artist.json", 'w') as artist_file:
-            artist_file.write(json.dumps(artists_json))
+        with open(output_file_path, 'w') as artist_file:
+            artist_file.write(json.dumps(artists_dict))
+
+    def create_songs_json(input_file_path, output_file_path):  ## Need to complete this !!
+        """
+        Utility funtion to create the songs json file using the data obtained from `get_tracks_artists_genres()`
+
+        Parameters:
+            :input_file_path (str): Path to the `get_tracks_artists_genres()` json data
+            :output_file_path (str): Output file name
+        """
+        with open(input_file_path, 'r') as json_file:
+            json_content = json.loads(json_file.read())
+        songs_dict = []
+        for count, i in enumerate(json_content):
+            songs_dict.append({
+                "song_num": count+1,
+                "id": i["id"],
+                "song_name": i["name"],
+                "popularity": i["popularity"],
+                "duration_sec": i["duration_sec"],
+                "image": i["image"],
+                "preview_url": i["preview_url"]
+            })
+        with open(output_file_path, 'w') as artist_file:
+            artist_file.write(json.dumps(songs_dict))
 
