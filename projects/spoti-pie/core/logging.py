@@ -32,6 +32,6 @@ class Logger():
         self.logger.setLevel(level)
         consoleHandler = logging.StreamHandler()
         consoleHandler.setLevel(level)
-        formatter = logging.Formatter('%(asctime)s - [%(name)s] [%(levelname)s]: %(message)s', datefmt='%m/%d/%Y %I:%M:%S%p')
+        formatter = logging.Formatter('%(asctime)s [%(name)s] [%(levelname)s]: %(message)s', datefmt='%m/%d/%Y %I:%M:%S%p')
         consoleHandler.setFormatter(formatter)
         self.logger.addHandler(consoleHandler)
