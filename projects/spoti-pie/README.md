@@ -9,7 +9,8 @@ Project Structure
     - `user_auth_token.py`: This is used to generate the token(Implicit Grant Flow)
     - `utility_spotipy.py`: This contains useful utility funtions to perform repetitive tasks and some other important actions (ex:`playlist_genres()`)
     - `json_file_generator.py`: As the name suggests, used to create the json files.
-- `.env`: Add your Client ID and Secret in this file.
+- `.env`: 
+    - Add your Client ID and Secret in this file.
     - Create an app to get the above details: https://developer.spotify.com/dashboard/applications
 
 Spotify Client Credential Flow
