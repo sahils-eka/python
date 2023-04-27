@@ -30,4 +30,4 @@ def user_authorization():
         logging.error("%s: %s", user_authorization.__name__, response.content)
         sys.exit()
 
-# user_authorization()
+user_authorization()
