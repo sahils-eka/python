@@ -1,9 +1,9 @@
-import main as spotipie
+import core.main as spotipie
 import json
 
 class UtilitySpotiPy:
 
-    def enrichment_genres(tracks_and_artists):
+    def enrichment_genres(self, tracks_and_artists):
         """
         Utility function to add `genres` to the track info.
 
@@ -24,7 +24,7 @@ class UtilitySpotiPy:
             i["genres"] = genres
         return tracks_and_artists
 
-    def get_tracks_artists_genres(playlist_items):
+    def get_tracks_artists_genres(self, playlist_items):
         """
         Utility funtion to get relevant info of a Playlist.
 
@@ -54,7 +54,7 @@ class UtilitySpotiPy:
         tracks_artists_genres = UtilitySpotiPy.enrichment_genres(tracks_and_artists=tracks_and_artists)
         return tracks_artists_genres
 
-    def get_unique_trackids(tracks_and_artists):
+    def get_unique_trackids(self, tracks_and_artists):
         """
         Utility funtion to get the Unique track ids from the user's track and artist dict.
         
@@ -71,7 +71,7 @@ class UtilitySpotiPy:
         return unique_track_ids
 
 
-    def get_unique_artistids(tracks_and_artists):
+    def get_unique_artistids(self, tracks_and_artists):
         """
         Utility funtion to get the Unique artist ids from the user's track and artist dict.
         
@@ -122,7 +122,7 @@ class UtilitySpotiPy:
         genre_count = dict([(genre, genres.count(genre)) for genre in genres])
         return {"name":playlist_details[0], "id":playlist_details[1], "num_of_songs":playlist_details[2], "genres":genre_count}
 
-    def create_artists_json(input_file_path, output_file_path):
+    def create_artists_json(self, input_file_path, output_file_path):
         """
         Utility funtion to create the artist json file using the data obtained from `get_tracks_artists_genres()`
 
@@ -152,7 +152,7 @@ class UtilitySpotiPy:
         with open(output_file_path, 'w') as artist_file:
             artist_file.write(json.dumps(artists_dict))
 
-    def create_songs_json(input_file_path, output_file_path):  ## Need to complete this !!
+    def create_songs_json(self, input_file_path, output_file_path):  ## Need to complete this !!
         """
         Utility funtion to create the songs json file using the data obtained from `get_tracks_artists_genres()`
 
@@ -175,4 +175,3 @@ class UtilitySpotiPy:
             })
         with open(output_file_path, 'w') as artist_file:
             artist_file.write(json.dumps(songs_dict))
-
