@@ -321,8 +321,21 @@ def get_my_top_artists(token, term="short_term"):
     url_query = f"{url}?time_range={term}&offset=0&limit=10"
     headers = get_auth_header(token=token)
     response = requests.get(url=url_query, headers=headers)
+    top10_artists = []
     if response.status_code >=200 and response.status_code <=299:
-        return response.content
+        for count, i in enumerate(response.json()["items"]):
+            artist = {}
+            artist["artist_rank"] = count+1
+            artist["id"] = i["id"]
+            artist["name"] = i["name"]
+            artist["popularity"] = i["popularity"]
+            artist["artist_url"] = i["external_urls"]["spotify"]
+            artist["genres"] = i["genres"]
+            if len(i["images"]) >= 2:
+                artist["image"] = i["images"][1]["url"]
+            top10_artists.append(artist)
+        return top10_artists
     else:
         logging.error("%s: %s", get_my_top_artists.__name__, response.content)
         sys.exit()
+
