@@ -3,11 +3,14 @@ import os
 import json
 
 class JsonFileGenerator:
-    def __init__(self, items):
-        load_dotenv()
-        self.items = items
-        self.file_name = os.getenv("JSON_FILE_NAME")
+    def __init__(self):
+        pass
 
-    def json_generator(self):
-        with open(self.file_name, 'w') as jsonfile:
-            json.dump(self.items, jsonfile)
+    def json_generator(self, items, file_name):
+        with open(file_name, 'w') as jsonfile:
+            json.dump(items, jsonfile)
+
+    def json_reader(self, file_path):
+        with open(file_path, 'r') as file:
+            file_content = json.loads(file.read())
+        return file_content
