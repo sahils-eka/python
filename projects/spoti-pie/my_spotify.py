@@ -1,13 +1,9 @@
-import main as spotipie
+import core.main as spotipie
 from utility.utility_spotipy import UtilitySpotiPy
-import json
-from utility.csv_generator import CsvFileGenerator
 from utility.json_file_generator import JsonFileGenerator
 
-user_auth_token = "BQAt01PIBZOSmAe1J5ykqLdh7UAxA-On7ZQlb5wkIghwqCk9B8K5jxQJyJ1vs1x2XJzLia9jEtxa8wSv2F8ojqvo7dnPFaDGljR188aRxnwYgTEWyIh92aULVy01I_svlr7n2a8bRNJtzt9njlSwbxvO4YFhdLCqhsSkUuzFfZRmHNF3Bqa7WtSn9L3FfFqn8AbSeg0neSItFtcr&token_type=Bearer&expires_in=3600&state=rmcdwgetnam"
+user_auth_token = "BQAyGeLGvzM714AjRCcX6maYSii_fw6mCG64iutNmG2spDsvYrescYHHYWABGBb-dLlykHuqNJPZjPexNNxCyatRZEXJac8kv89DYCea-hrrq24zNLdPY4D6tcPQxk0ktvW3okVrAVXaRT7jH5FVDX3mVL6Oj6o0PLCMr3bHLlHK4Y-mZVNK4IdabEQlx8zLqZJkFJwaiHBkhvEQ&token_type=Bearer&expires_in=3600&state=yhtdfciprfv"
 
-top_10_tracks = spotipie.get_my_top_tracks(token=user_auth_token, term="long_term")
-items = UtilitySpotiPy.get_tracks_artists_genres(playlist_items=top_10_tracks)
-print(items)
-file2 = JsonFileGenerator(items=items)
-file2.json_generator()
+top10_artists = spotipie.get_my_top_artists(token=user_auth_token, term="long_term")
+file = JsonFileGenerator(items=top10_artists)
+file.json_generator()
