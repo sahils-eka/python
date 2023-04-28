@@ -55,7 +55,7 @@ class UtilitySpotiPy:
                 track["image"] = ""
             track["preview_url"] = i["track"]["preview_url"]
             tracks_and_artists.append(track)
-        tracks_artists_genres = UtilitySpotiPy.enrichment_genres(tracks_and_artists=tracks_and_artists)
+        tracks_artists_genres = self.enrichment_genres(tracks_and_artists=tracks_and_artists)
         return tracks_artists_genres
 
     def get_unique_trackids(self, tracks_and_artists):
@@ -109,8 +109,8 @@ class UtilitySpotiPy:
         
         playlist_items = spotipie.get_user_playlist_items(user_auth_token=user_auth_token, playlist_id=playlist_id)
         tracks_and_artists = self.get_playlist_tracks_artists(playlist_items=playlist_items)
-        tracks_artists = UtilitySpotiPy.get_playlist_tracks_artists(playlist_item=playlist_items)
-        track_ids = UtilitySpotiPy.get_unique_trackids(tracks_and_artists=tracks_artists)
+        tracks_artists = self.get_playlist_tracks_artists(playlist_item=playlist_items)
+        track_ids = self.get_unique_trackids(tracks_and_artists=tracks_artists)
         for i in track_ids:
             track_artistis = spotipie.get_songs_artist(track_id=i)
             for id in track_artistis:
@@ -154,7 +154,7 @@ class UtilitySpotiPy:
                     artists.append(j["artist_id"])
         self.json_utils.json_generator(items=artists_dict, file_name=output_file_path)
 
-    def create_songs_json(self, input_file_path, output_file_path):
+    def create_songs_json(self, input_file_path, output_file_path):  ## Need to complete this !!
         """
         Utility funtion to create the songs json file using the data obtained from `get_tracks_artists_genres()`
 
@@ -175,3 +175,18 @@ class UtilitySpotiPy:
             song["preview_url"] = i["preview_url"]
             songs_dict.append(song)
         self.json_utils.json_generator(items=songs_dict, file_name=output_file_path)
+
+    def enrichment_audio_feature(self, song_items):
+        """
+        Utility function to add `audio features` to the track info.
+
+        Parameters:
+            :song_items (list[dict]): List structure same as what is returned from `get_tracks_artists_genres()` 
+        
+        Returns:
+            :tracks_and_artists (list): For now enriching the track_and_artist dict by adding `genres` info.
+        """
+        for count, i in enumerate(song_items):
+            audio_features = spotipie.get_track_audio_features(track_id=i["id"])
+            song_items[count].update(audio_features)
+        return song_items
