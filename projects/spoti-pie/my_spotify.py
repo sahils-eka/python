@@ -1,9 +1,18 @@
 import core.main as spotipie
 from utility.utility_spotipy import UtilitySpotiPy
 from utility.json_file_generator import JsonFileGenerator
+import os
+from dotenv import load_dotenv
 
-user_auth_token = "BQAyGeLGvzM714AjRCcX6maYSii_fw6mCG64iutNmG2spDsvYrescYHHYWABGBb-dLlykHuqNJPZjPexNNxCyatRZEXJac8kv89DYCea-hrrq24zNLdPY4D6tcPQxk0ktvW3okVrAVXaRT7jH5FVDX3mVL6Oj6o0PLCMr3bHLlHK4Y-mZVNK4IdabEQlx8zLqZJkFJwaiHBkhvEQ&token_type=Bearer&expires_in=3600&state=yhtdfciprfv"
+load_dotenv()
+spotipie_utils = UtilitySpotiPy()
+json_utils = JsonFileGenerator()
 
-top10_artists = spotipie.get_my_top_artists(token=user_auth_token, term="long_term")
-file = JsonFileGenerator(items=top10_artists)
-file.json_generator()
+user_auth_token = "" # user_auth_token.py
+
+top10_tracks_items = spotipie.get_my_top_tracks(token=user_auth_token, term="long_term")
+top10_tracks_items = spotipie_utils.get_tracks_artists_genres(playlist_items=top10_tracks_items)
+top10_tracks_items = spotipie_utils.enrichment_audio_feature(song_items=top10_tracks_items)
+
+file = os.getenv("JSON_FILE_NAME")
+json_utils.json_generator(items=top10_tracks_items, file_name=file)
