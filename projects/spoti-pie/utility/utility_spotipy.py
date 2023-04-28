@@ -1,7 +1,11 @@
 import core.main as spotipie
-import json
+from utility.json_file_generator import JsonFileGenerator
+
 
 class UtilitySpotiPy:
+    
+    def __init__(self):
+        self.json_utils = JsonFileGenerator()
 
     def enrichment_genres(self, tracks_and_artists):
         """
@@ -130,8 +134,7 @@ class UtilitySpotiPy:
             :input_file_path (str): Path to the `get_tracks_artists_genres()` json data
             :output_file_path (str): Output file name
         """
-        with open(input_file_path, 'r') as json_file:
-            json_content = json.loads(json_file.read())
+        json_content = self.json_utils.json_reader(input_file_path)
         artists_dict = []
         artists = []
         for i in json_content:
@@ -149,10 +152,9 @@ class UtilitySpotiPy:
                     artist["artist_popularity"]= artist_detail["popularity"]
                     artists_dict.append(artist)
                     artists.append(j["artist_id"])
-        with open(output_file_path, 'w') as artist_file:
-            artist_file.write(json.dumps(artists_dict))
+        self.json_utils.json_generator(items=artists_dict, file_name=output_file_path)
 
-    def create_songs_json(self, input_file_path, output_file_path):  ## Need to complete this !!
+    def create_songs_json(self, input_file_path, output_file_path):
         """
         Utility funtion to create the songs json file using the data obtained from `get_tracks_artists_genres()`
 
@@ -160,18 +162,16 @@ class UtilitySpotiPy:
             :input_file_path (str): Path to the `get_tracks_artists_genres()` json data
             :output_file_path (str): Output file name
         """
-        with open(input_file_path, 'r') as json_file:
-            json_content = json.loads(json_file.read())
+        json_content = self.json_utils.json_reader(input_file_path)
         songs_dict = []
         for count, i in enumerate(json_content):
-            songs_dict.append({
-                "song_num": count+1,
-                "id": i["id"],
-                "song_name": i["name"],
-                "popularity": i["popularity"],
-                "duration_sec": i["duration_sec"],
-                "image": i["image"],
-                "preview_url": i["preview_url"]
-            })
-        with open(output_file_path, 'w') as artist_file:
-            artist_file.write(json.dumps(songs_dict))
+            song = {}
+            song["song_num"] = count+1
+            song["id"] = i["id"]
+            song["song_name"] = i["name"]
+            song["popularity"] = i["popularity"]
+            song["duration_sec"] = i["duration_sec"]
+            song["image"] = i["image"]
+            song["preview_url"] = i["preview_url"]
+            songs_dict.append(song)
+        self.json_utils.json_generator(items=songs_dict, file_name=output_file_path)
